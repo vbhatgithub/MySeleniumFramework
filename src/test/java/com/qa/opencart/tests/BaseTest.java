@@ -10,7 +10,7 @@ import org.testng.asserts.SoftAssert;
 import com.qa.opencart.factory.DriverFactory;
 import com.qa.opencart.pages.AccountsPage;
 import com.qa.opencart.pages.LoginPage;
-import com.qa.opencart.pages.Loginpage_Delete;
+
 import com.qa.opencart.pages.ProductInfoPage;
 import com.qa.opencart.pages.SearchResultsPage;
 
@@ -24,7 +24,7 @@ public class BaseTest {
 	SoftAssert softassert;
 	SearchResultsPage searchResultPage;
 	ProductInfoPage productInfoPage;
-	Loginpage_Delete loginpagedelete;
+	
 	
 	
 	
@@ -34,7 +34,6 @@ public class BaseTest {
 		prop = df.init_prop();
 		driver = df.init_driver(prop);
 		loginpage = new LoginPage(driver);
-		loginpagedelete = new Loginpage_Delete(driver);
 		softassert = new SoftAssert();
 	}
 	
