@@ -16,7 +16,7 @@ public class Constants {
 	
 	
 	public static final String LOGIN_PAGE_URL_FRACTION = "route=account/login";
-	public static final int DEFAULT_TIME_OUT = 5;
+	public static final int DEFAULT_TIME_OUT = 6;
 	
 	
 	public static final String LOGIN_ERROR_MESSAGE = "Warning: No match for E-Mail Address and/or Password.";
