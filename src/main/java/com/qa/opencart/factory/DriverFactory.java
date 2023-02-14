@@ -36,7 +36,7 @@ public class DriverFactory {
 	public WebDriver init_driver(Properties prop)  {
 		
 		String browerName = prop.getProperty("browser").trim();
-		
+		String browserVersion = prop.getProperty("browserversion").trim();
 		System.out.println("browser name is : " + browerName);
 		
 		highlight = prop.getProperty("highlight");
@@ -49,7 +49,7 @@ public class DriverFactory {
 			
 			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
 				//remote code
-				init_remoteDriver("chrome");
+				init_remoteDriver("chrome",browserVersion);
 			}
 			
 			else {
@@ -65,7 +65,7 @@ public class DriverFactory {
 			
 			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
 				//remote code
-				init_remoteDriver("firefox");
+				init_remoteDriver("firefox",browserVersion);
 			}
 			
 			else {
@@ -94,13 +94,18 @@ public class DriverFactory {
 		return getDriver();
 	}
 	
-	private void init_remoteDriver(String browser) {
+	private void init_remoteDriver(String browser,String browserVersion) {
 		System.out.println("running test on remote grid server:" + browser);
 		
 		//Selenium 4.0
 		if(browser.equalsIgnoreCase("chrome")) {
 			DesiredCapabilities cap = new DesiredCapabilities();
 			cap.setBrowserName("chrome");
+			cap.setCapability("browserName","chrome");
+			cap.setCapability("browserVersion",browserVersion);
+			cap.setCapability("enableVNC",true);
+		
+			
 			try {
 				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),cap));
 			} catch (MalformedURLException e) {
@@ -112,6 +117,9 @@ public class DriverFactory {
 		else if(browser.equalsIgnoreCase("firefox")) {
 			DesiredCapabilities cap = new DesiredCapabilities();
 			cap.setBrowserName("firefox");
+			cap.setCapability("browserName","firefox");
+			cap.setCapability("browserVersion",browserVersion);
+			cap.setCapability("enableVNC",true);
 			try {
 				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),cap));
 			} catch (MalformedURLException e) {
@@ -121,9 +129,14 @@ public class DriverFactory {
 		}
 			
 		
-		//Selnium 4.0 future. if they remove cap.setBrowserName
+		/*//Selnium 4.0 future. if they remove cap.setBrowserName
 		if(browser.equalsIgnoreCase("chrome")) {
 			DesiredCapabilities cap = new DesiredCapabilities();
+			cap.setCapability("browserName","chrome");
+			cap.setCapability("browserVersion",browserVersion);
+			cap.setCapability("enableVNC",true);
+			
+			
 			cap.setCapability(ChromeOptions.CAPABILITY, optionsManager.getChromeOptions());
 			try {
 				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),cap));
@@ -135,6 +148,9 @@ public class DriverFactory {
 		
 		else if(browser.equalsIgnoreCase("firefox")) {
 			DesiredCapabilities cap = new DesiredCapabilities();
+			cap.setCapability("browserName","firefox");
+			cap.setCapability("browserVersion",browserVersion);
+			cap.setCapability("enableVNC",true);
 			cap.setCapability(FirefoxOptions.FIREFOX_OPTIONS, optionsManager.getFirefoxOptions());
 			try {
 				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),cap));
@@ -142,12 +158,16 @@ public class DriverFactory {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 		
 		
 		//Selenium 3 code
 		/*if(browser.equalsIgnoreCase("chrome")) {
 			DesiredCapabilities cap = DesiredCapabilities.chrome();
+			
+			
+			
+			
 			cap.setCapability(ChromeOptions.CAPABILITY, optionsManager.getChromeOptions());//in next video,naveen has removed this??wat:(
 			try {
 				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),cap));
